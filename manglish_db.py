@@ -12,6 +12,11 @@ CREDS = Credentials.from_service_account_info(st.secrets, scopes=SCOPE)
 client = gspread.authorize(CREDS)
 SHEET_NAME = "manglish_dataset"  # Change this to your sheet's name
 sheet = client.open(SHEET_NAME).sheet1  # Open first sheet
+
+def submit():
+    st.session_state.my_text = st.session_state.widget
+    st.session_state.widget = ""
+
 def sidebar_bg(side_bg):
 
    main_bg_ext = 'jpg'
@@ -58,18 +63,20 @@ Your input will help us to develop linguistic models. \n
     # Display stored data
     data = sheet.get_all_records()
     df = pd.DataFrame(data)
+    df=df.applymap(lambda s: s.lower() if type(s) == str else s)
+    phrase_list=list(df['phrases'])
 
     # Initialize session state for input field if not exists
-    if "new_entry" not in st.session_state:
-        st.session_state.new_entry = ""
+    if "my_text" not in st.session_state:
+        st.session_state.my_text = ""
 
     # User input to add new data
-    new_entry = st.text_input("Enter new data:", st.session_state.new_entry)
-    col1, col2 = st.columns([1,1])
-    with col1:
-        if st.button("Submit",type="primary"):
-            if new_entry:
-                sheet.append_row([new_entry])
-                st.success("Data added successfully! Thank you for your response.")
-
+    st.text_input("Enter text here", key="widget", on_change=submit)
+    my_text = st.session_state.my_text
+    if st.button("Submit",type="primary"):
+        if my_text and my_text.lower() not in phrase_list:
+            sheet.append_row([my_text])
+            st.success("Data added successfully! Thank you for your response.")
+        else:
+            st.warning("This phrase already exists. Please try with a different one.")
 
