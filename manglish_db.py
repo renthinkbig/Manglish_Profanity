@@ -6,12 +6,13 @@ import base64
 
 # Load Google Sheets API credentials
 SCOPE = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-CREDS = Credentials.from_service_account_info(st.secrets["google_service_account"], scopes=SCOPE)
+st.write("Secrets Loaded:", st.secrets)
+#CREDS = Credentials.from_service_account_info(st.secrets["google_service_account"], scopes=SCOPE)
 
 # Connect to Google Sheets
-client = gspread.authorize(CREDS)
-SHEET_NAME = "manglish_dataset"  # Change this to your sheet's name
-sheet = client.open(SHEET_NAME).sheet1  # Open first sheet
+# client = gspread.authorize(CREDS)
+# SHEET_NAME = "manglish_dataset"  # Change this to your sheet's name
+# sheet = client.open(SHEET_NAME).sheet1  # Open first sheet
 def sidebar_bg(side_bg):
 
    main_bg_ext = 'jpg'
@@ -56,8 +57,8 @@ Your input will help us to develop linguistic models. \n
     st.title("Manglish Profanity Dataset Builder")
 
     # Display stored data
-    data = sheet.get_all_records()
-    df = pd.DataFrame(data)
+    # data = sheet.get_all_records()
+    # df = pd.DataFrame(data)
 
     # Initialize session state for input field if not exists
     if "new_entry" not in st.session_state:
@@ -69,7 +70,7 @@ Your input will help us to develop linguistic models. \n
     with col1:
         if st.button("Submit",type="primary"):
             if new_entry:
-                sheet.append_row([new_entry])
+                # sheet.append_row([new_entry])
                 st.success("Data added successfully! Thank you for your response.")
 
 
