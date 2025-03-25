@@ -1,11 +1,12 @@
 import streamlit as st
 from google.oauth2.service_account import Credentials
+import gspread
 import pandas as pd
 import base64
 
 # Load Google Sheets API credentials
 SCOPE = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-CREDS = Credentials.from_service_account_file(st.secrets["google"], scopes=SCOPE)
+CREDS = Credentials.from_service_account_file(st.secrets["google_service_account"], scopes=SCOPE)
 
 # Connect to Google Sheets
 client = gspread.authorize(CREDS)
