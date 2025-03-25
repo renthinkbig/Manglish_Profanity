@@ -56,10 +56,10 @@ This research aims to analyze language patterns and their role in informal commu
 Your input will help us to develop linguistic models. \n
 **Thank you!** '''
     st.sidebar.image('logo.jpg',width=400)
-    with st.sidebar:
-            st.write(f'''{text}''')
+    #with st.sidebar:
+            
     st.title("Manglish Profanity Dataset Builder")
-
+    st.write(f'''{text}''')
     # Display stored data
     data = sheet.get_all_records()
     df = pd.DataFrame(data)
