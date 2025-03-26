@@ -70,7 +70,7 @@ Your input will help us to develop linguistic models. \n
     # Initialize session state for input field if not exists
     if "my_text" not in st.session_state:
         st.session_state.my_text = ""
-    st.write(f'Number of phrases added: **{item_count}**')
+    st.write(f'Number of phrases added: **:red[{item_count}]**')
     # User input to add new data
     st.text_input("Enter text here", key="widget", on_change=submit)
     my_text = st.session_state.my_text
