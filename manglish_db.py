@@ -63,13 +63,14 @@ Your input will help us to develop linguistic models. \n
     # Display stored data
     data = sheet.get_all_records()
     df = pd.DataFrame(data)
+    item_count=len(df)
     df=df.applymap(lambda s: s.lower() if type(s) == str else s)
     phrase_list=list(df['phrases'])
 
     # Initialize session state for input field if not exists
     if "my_text" not in st.session_state:
         st.session_state.my_text = ""
-
+    st.write(f'Number of phrases added: **{item_count}**')
     # User input to add new data
     st.text_input("Enter text here", key="widget", on_change=submit)
     my_text = st.session_state.my_text
